@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CUFSpedia - Main Page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for the Inter font */
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            background-color: #f8f9fa; /* Light gray background, similar to Wikipedia */
+            color: #202122; /* Dark text color */
+        }
+        /* Style for links within the content */
+        a {
+            color: #3366cc; /* Standard blue for links */
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        /* Specific styling for the main content area for better readability */
+        .content-section p {
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        .content-section h2 {
+            font-size: 1.875rem; /* 3xl */
+            font-weight: 600; /* semibold */
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #a2a9b1; /* Light gray border for sections */
+            padding-bottom: 0.5rem;
+        }
+        .content-section h3 {
+            font-size: 1.5rem; /* 2xl */
+            font-weight: 600; /* semibold */
+            margin-top: 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+        /* Table of Contents specific styling */
+        .toc ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        .toc li {
+            margin-bottom: 0.25rem;
+        }
+        .toc a {
+            color: #0645ad; /* Deeper blue for TOC links */
+        }
+
+        /* Styles for the expandable roles list */
+        .expandable-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        .expandable-list-item {
+            margin-bottom: 0.25rem;
+        }
+        .expandable-toggle {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            font-weight: normal; /* To make it look like other links */
+            color: #0645ad; /* Deeper blue for links */
+        }
+        .expandable-toggle:hover {
+            text-decoration: underline;
+        }
+        .arrow {
+            margin-right: 0.5rem;
+            transition: transform 0.2s ease-in-out;
+        }
+        .expanded .arrow {
+            transform: rotate(90deg);
+        }
+        .sub-list {
+            padding-left: 1.5rem; /* Indentation for sub-items */
+            display: none; /* Hidden by default */
+        }
+        .sub-list li {
+            margin-top: 0.2rem;
+            margin-bottom: 0.2rem;
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+    <header class="bg-gray-100 border-b border-gray-300 py-2 px-4 shadow-sm">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="index.html" class="text-xl font-bold text-gray-800">CUFSpedia</a>
+            <nav>
+                <ul class="flex space-x-4 text-sm">
+                    <li><a href="index.html" class="text-gray-700 hover:text-blue-600">Main page</a></li>
+                    <li><a href="cufs.html" class="text-gray-700 hover:text-blue-600">Contents</a></li>
+                    <li><a href="cufs.html" class="text-gray-700 hover:text-blue-600">About CUFSpedia</a></li>
+                    <li><a href="https://discord.gg/WP8k6cGf" class="text-gray-700 hover:text-blue-600" target="_blank" rel="noopener noreferrer">Contact us</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto flex flex-grow py-8 px-4 md:px-0">
+        <aside class="hidden md:block w-1/5 pr-8 border-r border-gray-200">
+            <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm">
+                <h3 class="font-semibold text-lg mb-2">Paragraphs</h3>
+                <ul class="text-sm space-y-1 expandable-list">
+                    <li class="expandable-list-item"><a href="index.html" class="text-blue-600 hover:underline">Main page</a></li>
+                    <li class="expandable-list-item">
+                        <div class="expandable-toggle text-blue-600 hover:underline">
+                            <span class="arrow">></span> Roles
+                        </div>
+                        <ul class="sub-list">
+                            <li><a href="mom-personnel.html" class="text-blue-600 hover:underline">MoM personnel</a></li>
+                            <li><a href="stage-crew.html" class="text-blue-600 hover:underline">Stage crew</a></li>
+                            <li><a href="studio-staff.html" class="text-blue-600 hover:underline">Studio staff</a></li>
+                            <li><a href="script-writer.html" class="text-blue-600 hover:underline">Script Writer</a></li>
+                            <li><a href="actor.html" class="text-blue-600 hover:underline">Actor</a></li>
+                            <li><a href="co-director.html" class="text-blue-600 hover:underline">Co-director</a></li>
+                            <li><a href="builder-animator.html" class="text-blue-600 hover:underline">Builder/animator</a></li>
+                            <li><a href="voice-actor.html" class="text-blue-600 hover:underline">Voice actor</a></li>
+                            <li><a href="visitor.html" class="text-blue-600 hover:underline">Visitor</a></li>
+                            <li><a href="management-staff.html" class="text-blue-600 hover:underline">Management staff</a></li>
+                            <li><a href="nefarious-film-criminal.html" class="text-blue-600 hover:underline">Nefarious film criminal</a></li>
+                            <li><a href="film-architect.html" class="text-blue-600 hover:underline">Film Architect</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <article class="w-full md:w-4/5 md:pl-8 content-section">
+            <h1 class="text-4xl font-extrabold mb-4 text-gray-900">CUFSpedia</h1>
+
+            <div class="bg-gray-50 border border-gray-300 rounded-md p-4 mb-6 toc">
+                <div class="font-semibold text-lg mb-2">Contents</div>
+                <ul>
+                    <li><a href="#introduction">1 Introduction</a></li>
+                    <li><a href="#history">2 History</a></li>
+                    <li><a href="#features">3 Features</a></li>
+                    <li><a href="#impact">4 Impact and Reception</a></li>
+                    <li><a href="#see-also">5 See Also</a></li>
+                </ul>
+            </div>
+
+            <section id="introduction">
+                <h2>Introduction</h2>
+                <p>CUFSpedia- is a CUFS dedicated open souce site, which spreads information about the cufs so you can get something about it. CUFSpedia was created on march 25, 2025, i dont know for how long will it last, but i guess it will be here <strong>until TCU is alive</strong> or until i will have to pay for gifthub, or switch for a paid version of domains.</p>
+                <p>The site is completely open source, you can press shift+u to check any data you want. Use the "Contact me" list <code>just basically a button</code> to contact me, or join CUFS discord server!</p>
+            </section>
+
+            <section id="history">
+                <h2>History</h2>
+                <p>This idea was made by me honestly just by boringness, ive made this basically just for fun, but hey it exists now if you see it. My main idea was because i think there will be a lot of people joining there will be little information about the group, so ive made this. Again, the date of starting this site is March 25th, 2025.</p>
+            </section>
+
+            <section id="features">
+                <h2>Features</h2>
+                <p>Key features of CUFSpedia include its vast collection of articles, ive made this simple as possible so you can understand, and get the idea of cufs. The feature is that you can make notes, or learn new info about CUFS</p>
+                <p>The page also supports various tools for contributors, if you would like to help me in some way, please contact me in discord.</p>
+            </section>
+
+            <section id="impact">
+                <h2>Impact and Reception</h2>
+                <p>haha no impact!!!!</p>
+            </section>
+
+            <section id="see-also">
+                <h2>See Also</h2>
+                <ul class="list-disc pl-5 text-blue-600">
+                    <li><a href="roles.html">lists of roles</a></li>
+                    <li><a href="cufs.html">information</a></li>
+                </ul>
+            </section>
+
+        </article>
+    </main>
+
+    <footer class="bg-gray-100 border-t border-gray-300 py-4 px-4 mt-8 text-sm text-gray-600 text-center">
+        <div class="container mx-auto">
+            <p>&copy; 2025, CUFSpedia. Content is available under CGB and TCU permission, unless otherwise noted.</p>
+            <p class="mt-2">
+                <span class="text-gray-600">there is no privacy, you are always being watched</span> |
+                <a href="index.html" class="text-blue-600 hover:underline">About CUFSpedia</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const expandableToggle = document.querySelector('.expandable-toggle');
+            const subList = document.querySelector('.sub-list');
+
+            if (expandableToggle && subList) {
+                expandableToggle.addEventListener('click', function() {
+                    // Check if the sub-list is currently hidden
+                    if (subList.style.display === 'block') {
+                        subList.style.display = 'none';
+                        expandableToggle.classList.remove('expanded'); // Remove expanded class to rotate arrow back
+                    } else {
+                        subList.style.display = 'block';
+                        expandableToggle.classList.add('expanded'); // Add expanded class to rotate arrow
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
