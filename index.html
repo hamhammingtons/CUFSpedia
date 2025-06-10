@@ -207,7 +207,7 @@
 
             if (expandableToggle && subList) {
                 expandableToggle.addEventListener('click', function(event) {
-                    event.preventDefault(); // Stop the default link behavior
+                    event.preventDefault(); // Stop the default link behavior to allow expansion
                     subList.classList.toggle('hidden'); 
                     expandableToggle.classList.toggle('expanded'); 
                 });
