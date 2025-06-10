@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My CUFSpedia Page</title>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <link href="tailwind.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
     
     <style>
         /* Custom styles for the Inter font and general body */
@@ -57,6 +58,40 @@
         .toc a {
             color: #0645ad; /* Deeper blue for TOC links */
         }
+
+        /* Styles for the expandable roles list */
+        .expandable-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        .expandable-list-item {
+            margin-bottom: 0.25rem;
+        }
+        .expandable-toggle {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            font-weight: normal; /* To make it look like other links */
+            color: #0645ad; /* Deeper blue for links */
+        }
+        .expandable-toggle:hover {
+            text-decoration: underline;
+        }
+        .arrow {
+            margin-right: 0.5rem;
+            transition: transform 0.2s ease-in-out;
+        }
+        .expanded .arrow {
+            transform: rotate(90deg);
+        }
+        .sub-list {
+            padding-left: 1.5rem; /* Indentation for sub-items */
+            display: none; /* Hidden by default */
+        }
+        .sub-list li {
+            margin-top: 0.2rem;
+            margin-bottom: 0.2rem;
+        }
     </style>
 </head>
 <body class="flex flex-col min-h-screen">
@@ -90,6 +125,32 @@
                     <li><a href="#" class="text-blue-600 hover:underline">Related changes</a></li>
                     <li><a href="#" class="text-blue-600 hover:underline">Upload file</a></li>
                     <li><a href="#" class="text-blue-600 hover:underline">Special pages</a></li>
+                </ul>
+            </div>
+            
+            <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm mt-6">
+                <h3 class="font-semibold text-lg mb-2">Paragraphs</h3>
+                <ul class="text-sm space-y-1 expandable-list">
+                    <li class="expandable-list-item"><a href="index.html" class="text-blue-600 hover:underline">Main page</a></li>
+                    <li class="expandable-list-item">
+                        <a href="roles.html" class="expandable-toggle text-blue-600 hover:underline">
+                            <span class="arrow">></span> Roles
+                        </a>
+                        <ul class="sub-list">
+                            <li><a href="mom-personnel.html" class="text-blue-600 hover:underline">MoM personnel</a></li>
+                            <li><a href="stage-crew.html" class="text-blue-600 hover:underline">Stage crew</a></li>
+                            <li><a href="studio-staff.html" class="text-blue-600 hover:underline">Studio staff</a></li>
+                            <li><a href="script-writer.html" class="text-blue-600 hover:underline">Script Writer</a></li>
+                            <li><a href="actor.html" class="text-blue-600 hover:underline">Actor</a></li>
+                            <li><a href="co-director.html" class="text-blue-600 hover:underline">Co-director</a></li>
+                            <li><a href="builder-animator.html" class="text-blue-600 hover:underline">Builder/animator</a></li>
+                            <li><a href="voice-actor.html" class="text-blue-600 hover:underline">Voice actor</a></li>
+                            <li><a href="visitor.html" class="text-blue-600 hover:underline">Visitor</a></li>
+                            <li><a href="management-staff.html" class="text-blue-600 hover:underline">Management staff</a></li>
+                            <li><a href="nefarious-film-criminal.html" class="text-blue-600 hover:underline">Nefarious film criminal</a></li>
+                            <li><a href="film-architect.html" class="text-blue-600 hover:underline">Film Architect</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </aside>
@@ -133,7 +194,7 @@
             <section id="see-also">
                 <h2>See Also</h2>
                 <ul class="list-disc pl-5 text-blue-600">
-                    <li><a href="#">Lists of roles</a></li>
+                    <li><a href="roles.html">Lists of roles</a></li>
                     <li><a href="cufs.html">Information</a></li>
                 </ul>
             </section>
@@ -149,5 +210,20 @@
             </p>
         </div>
     </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const expandableToggle = document.querySelector('.expandable-toggle');
+            const subList = document.querySelector('.sub-list');
+
+            if (expandableToggle && subList) {
+                expandableToggle.addEventListener('click', function(event) {
+                    event.preventDefault(); // Stop the default link behavior
+                    subList.classList.toggle('hidden'); 
+                    expandableToggle.classList.toggle('expanded'); 
+                });
+            }
+        });
+    </script>
 </body>
 </html>
