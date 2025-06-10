@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roles and Such - CUFSpedia</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for the Inter font */
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            background-color: #f8f9fa; /* Light gray background, similar to Wikipedia */
+            color: #202122; /* Dark text color */
+        }
+        /* Style for links within the content */
+        a {
+            color: #3366cc; /* Standard blue for links */
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        /* Specific styling for the main content area for better readability */
+        .content-section p {
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        .content-section h2 {
+            font-size: 1.875rem; /* 3xl */
+            font-weight: 600; /* semibold */
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #a2a9b1; /* Light gray border for sections */
+            padding-bottom: 0.5rem;
+        }
+        .content-section h3 {
+            font-size: 1.5rem; /* 2xl */
+            font-weight: 600; /* semibold */
+            margin-top: 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+        /* Table of Contents specific styling */
+        .toc ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        .toc li {
+            margin-bottom: 0.25rem;
+        }
+        .toc a {
+            color: #0645ad; /* Deeper blue for TOC links */
+        }
+
+        /* Ensure role items are positioned relative for absolute children */
+        .role-item {
+            position: relative;
+        }
+        /* Add hover effect for clickable role items */
+        .role-item.clickable:hover {
+            background-color: #e0e0e0; /* Slightly darker background on hover */
+            border-radius: 0.5rem;
+        }
+        /* Ensure the clickable area covers the whole item but respects spacing */
+        .role-item.clickable a {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            height: 100%;
+            width: 100%;
+            padding: 0.5rem; /* Matches padding of the parent div */
+            text-decoration: none; /* Remove underline from link */
+        }
+        .role-item.clickable a:hover {
+            text-decoration: none; /* Keep no underline on hover too */
+        }
+
+        /* Styles for the magnified image container */
+        .magnified-image-container {
+            position: absolute;
+            top: -160px; /* Position above the original image, adjust as needed */
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10; /* Ensure it's on top of other content */
+            background-color: white;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Stronger shadow for pop-out effect */
+            width: 150px; /* Set a fixed width for the magnified image container */
+            height: 150px; /* Set a fixed height for the magnified image container */
+            display: flex; /* Use flexbox to center content */
+            justify-content: center;
+            align-items: center;
+            overflow: hidden; /* Hide overflow if image is slightly larger */
+
+            /* Initial state: hidden */
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+            pointer-events: none; /* Allows mouse events to pass through when hidden */
+        }
+
+        /* Image inside the magnified container */
+        .magnified-image-container img {
+            max-width: 100%; /* Ensure image fits within its container */
+            max-height: 100%;
+            object-fit: contain; /* Maintain aspect ratio and fit within container */
+            border-radius: 0.25rem; /* Slightly rounded corners for the magnified image */
+        }
+
+        /* Show magnified image on hover */
+        .role-item:hover .magnified-image-container {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto; /* Enable mouse events when visible */
+        }
+
+        /* Styles for the expandable roles list */
+        .expandable-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        .expandable-list-item {
+            margin-bottom: 0.25rem;
+        }
+        .expandable-toggle {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            font-weight: normal; /* To make it look like other links */
+            color: #0645ad; /* Deeper blue for links */
+        }
+        .expandable-toggle:hover {
+            text-decoration: underline;
+        }
+        .arrow {
+            margin-right: 0.5rem;
+            transition: transform 0.2s ease-in-out;
+        }
+        .expanded .arrow {
+            transform: rotate(90deg);
+        }
+        .sub-list {
+            padding-left: 1.5rem; /* Indentation for sub-items */
+            display: none; /* Hidden by default */
+        }
+        .sub-list li {
+            margin-top: 0.2rem;
+            margin-bottom: 0.2rem;
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+    <header class="bg-gray-100 border-b border-gray-300 py-2 px-4 shadow-sm">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="index.html" class="text-xl font-bold text-gray-800">CUFSpedia</a>
+            <nav>
+                <ul class="flex space-x-4 text-sm">
+                    <li><a href="index.html" class="text-gray-700 hover:text-blue-600">Main page</a></li>
+                    <li><a href="cufs.html" class="text-gray-700 hover:text-blue-600">Contents</a></li>
+                    <li><a href="cufs.html" class="text-gray-700 hover:text-blue-600">About CUFSpedia</a></li>
+                    <li><a href="https://discord.gg/WP8k6cGf" class="text-gray-700 hover:text-blue-600" target="_blank" rel="noopener noreferrer">Contact us</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto flex flex-grow py-8 px-4 md:px-0">
+        <aside class="hidden md:block w-1/5 pr-8 border-r border-gray-200">
+            <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm">
+                <h3 class="font-semibold text-lg mb-2">Paragraphs</h3>
+                <ul class="text-sm space-y-1 expandable-list">
+                    <li class="expandable-list-item"><a href="index.html" class="text-blue-600 hover:underline">Main page</a></li>
+                    <li class="expandable-list-item">
+                        <div class="expandable-toggle text-blue-600 hover:underline">
+                            <span class="arrow">></span> Roles
+                        </div>
+                        <ul class="sub-list">
+                            <li><a href="mom-personnel.html" class="text-blue-600 hover:underline">MoM personnel</a></li>
+                            <li><a href="stage-crew.html" class="text-blue-600 hover:underline">Stage crew</a></li>
+                            <li><a href="studio-staff.html" class="text-blue-600 hover:underline">Studio staff</a></li>
+                            <li><a href="script-writer.html" class="text-blue-600 hover:underline">Script Writer</a></li>
+                            <li><a href="actor.html" class="text-blue-600 hover:underline">Actor</a></li>
+                            <li><a href="co-director.html" class="text-blue-600 hover:underline">Co-director</a></li>
+                            <li><a href="builder-animator.html" class="text-blue-600 hover:underline">Builder/animator</a></li>
+                            <li><a href="voice-actor.html" class="text-blue-600 hover:underline">Voice actor</a></li>
+                            <li><a href="visitor.html" class="text-blue-600 hover:underline">Visitor</a></li>
+                            <li><a href="management-staff.html" class="text-blue-600 hover:underline">Management staff</a></li>
+                            <li><a href="nefarious-film-criminal.html" class="text-blue-600 hover:underline">Nefarious film criminal</a></li>
+                            <li><a href="film-architect.html" class="text-blue-600 hover:underline">Film Architect</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <article class="w-full md:w-4/5 md:pl-8 content-section">
+            <h1 class="text-4xl font-extrabold mb-4 text-gray-900">Roles and Such</h1>
+
+            <div class="bg-gray-50 border border-gray-300 rounded-md p-4 mb-6 toc">
+                <div class="font-semibold text-lg mb-2">Contents</div>
+                <ul>
+                    <li><a href="#introduction">1 Introduction to Roles</a></li>
+                    <li><a href="#general-roles">2 General Roles</a></li>
+                    <li><a href="#special-roles">3 Special Roles</a></li>
+                </ul>
+            </div>
+
+            <section id="introduction">
+                <h2>Introduction to Roles</h2>
+                <p>Basically, this will just introduce you to roles that we have in CUFS. Each role has sections with Hierarchy and Information. Please check on them.</p>
+            </section>
+
+            <section id="general-roles">
+                <h2>General Roles</h2>
+                <p>Here you can find a list of general roles within the CUFS. Each role is represented by an icon and a name.</p>
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 py-4">
+                    <div class="role-item flex flex-col items-center text-center p-0 cursor-pointer clickable">
+                        <a href="mom-personnel.html">
+                            <img src="https://ik.imagekit.io/pmdim6jh9/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202025-05-25%20183630.png?updatedAt=1748180947458" alt="MoM personnel Icon" class="rounded-lg w-24 h-24 object-cover mb-2 border border-gray-300">
+                            <h4 class="font-semibold text-gray-800">MoM personnel</h4>
+                        </a>
+                        <div class="magnified-image-container">
+                            <img src="https://ik.imagekit.io/pmdim6jh9/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202025-05-25%20183630.png?updatedAt=1748180947458" alt="MoM personnel Full Resolution">
+                        </div>
+                    </div>
+                    <div class="role-item flex flex-col items-center text-center p-0 cursor-pointer clickable">
+                        <a href="stage-crew.html">
+                            <img src="https://ik.imagekit.io/pmdim6jh9/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202025-05-25%20183604.png?updatedAt=1748180947393" alt="Stage Crew Icon" class="rounded-lg w-24 h-24 object-cover mb-2 border border-gray-300">
+                            <h4 class="font-semibold text-gray-800">Stage crew</h4>
+                        </a>
+                        <div class="magnified-image-container">
+                            <img src="https://ik.imagekit.io/pmdim6jh9/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202025-05-25%20183604.png?updatedAt=1748180947393" alt="Stage Crew Full Resolution">
+                        </div>
+                    </div>
+                    <div class="role-item flex flex-col items-center text-center p-0 cursor-pointer clickable">
+                        <a href="studio-staff.html">
+                            <img src="https://ik.imagekit.io/pmdim6jh9/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202025-05-25%20183634.png?updatedAt=1748180947562" alt="Studio Staff Icon" class="rounded-lg w-24 h-24 object-cover mb-2 border border-gray-300">
+                            <h4 class="font-semibold text-gray-800">Studio staff</h4>
+                        </a>
+                        <div class="magnified-image-container">
+                            <img src="https://ik.imagekit.io/pmdim6jh9/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202025-05-25%20183634.png?updatedAt=1748180947562" alt="Studio Staff Full Resolution">
+                        </div>
+                    </div>
+                    <div class="role-item flex flex-col items-center text-center p-0 cursor-pointer clickable">
+                        <a href="script-writer.html">
+                            <img src="https://ik.imagekit.io/pmdim6jh9/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202025-05-25%20183610.png?updatedAt=1748180947825" alt="Script Writer Icon" class="rounded-lg w-24 h-24 object-cover mb-2 border border-gray-300">
+                            <h4 class="font-semibold text-gray-800">Script Writer</h4>
+                        </a>
+                        <div class="magnified-image-container">
+                            <img src="https://ik.imagekit.io/pmdim6jh9/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202025-05-25%20183610.png?updatedAt=1748180947825" alt="Script Writer Full Resolution">
+                        </div>
+                    </div>
+                    <div class="role-item flex flex-col items-center text-center p-0 cursor-pointer clickable">
+                        <a href="actor.html">
+                            <img src="https://ik.imagekit.io/pmdim6jh9/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202025-05-25%20183625.png?updatedAt=1748180947485" alt="Actor Icon" class="rounded-lg w-24 h-24 object-cover mb-2 border border-gray-300">
+                            <h4 class="font-semibold text-gray-800">Actor</h4>
+                        </a>
+                        <div class="magnified-image-container">
+                            <img src="https://ik.imagekit.io/pmdim6jh9/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202025-05-25%20183625.png?updatedAt=1748180947485" alt="Actor Full Resolution">
+                        </div>
+                    </div>
+                    <div class="role-item flex flex-col items-center text-center p-0 cursor-pointer clickable">
+                        <a href="co-director.html">
+                            <img src="https://ik.imagekit.io/pmdim6jh9/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202025-05-25%20183641.png?updatedAt=1748180947546" alt="Co-Director Icon" class="rounded-lg w-24 h-24 object-cover mb-2 border border-gray-300">
+                            <h4 class="font-semibold text-gray-800">Co-director</h4>
+                        </a>
+                        <div class="magnified-image-container">
+                            <img src="https://ik.imagekit.io/pmdim6jh9/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202025-05-25%20183641.png?updatedAt=1748180947546" alt="Co-Director Full Resolution">
+                        </div>
+                    </div>
+                    <div class="role-item flex flex-col items-center text-center p-0 cursor-pointer clickable">
+                        <a href="builder-animator.html">
+                            <img src="https://ik.imagekit.io/pmdim6jh9/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202025-05-25%20183616.png?updatedAt=1748180947577" alt="Builder/Animator Icon" class="rounded-lg w-24 h-24 object-cover mb-2 border border-gray-300">
+                            <h4 class="font-semibold text-gray-800">Builder/animator</h4>
+                        </a>
+                        <div class="magnified-image-container">
+                            <img src="https://ik.imagekit.io/pmdim6jh9/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202025-05-25%20183616.png?updatedAt=1748180947577" alt="Builder/Animator Full Resolution">
+                        </div>
+                    </div>
+                    <div class="role-item flex flex-col items-center text-center p-0 cursor-pointer clickable">
+                        <a href="voice-actor.html">
+                            <img src="https://ik.imagekit.io/pmdim6jh9/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202025-05-25%20183621.png?updatedAt=1748180947645" alt="Voice actor Icon" class="rounded-lg w-24 h-24 object-cover mb-2 border border-gray-300">
+                            <h4 class="font-semibold text-gray-800">Voice actor</h4>
+                        </a>
+                        <div class="magnified-image-container">
+                            <img src="https://ik.imagekit.io/pmdim6jh9/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202025-05-25%20183621.png?updatedAt=1748180947645" alt="Voice actor Full Resolution">
+                        </div>
+                    </div>
+                    <div class="role-item flex flex-col items-center text-center p-0 cursor-pointer clickable">
+                        <a href="visitor.html">
+                            <img src="https://ik.imagekit.io/pmdim6jh9/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202025-05-25%20183247.png?updatedAt=1748180947664" alt="Visitor Icon" class="rounded-lg w-24 h-24 object-cover mb-2 border border-gray-300">
+                            <h4 class="font-semibold text-gray-800">Visitor</h4>
+                        </a>
+                        <div class="magnified-image-container">
+                            <img src="https://ik.imagekit.io/pmdim6jh9/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202025-05-25%20183247.png?updatedAt=1748180947664" alt="Visitor Full Resolution">
+                        </div>
+                    </div>
+                    <div class="role-item flex flex-col items-center text-center p-0 cursor-pointer clickable">
+                        <a href="management-staff.html">
+                            <img src="https://ik.imagekit.io/pmdim6jh9/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202025-05-25%20185250.png?updatedAt=1748181253567" alt="Management Staff Icon" class="rounded-lg w-24 h-24 object-cover mb-2 border border-gray-300">
+                            <h4 class="font-semibold text-gray-800">Management staff</h4>
+                        </a>
+                        <div class="magnified-image-container">
+                            <img src="https://ik.imagekit.io/pmdim6jh9/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202025-05-25%20185250.png?updatedAt=1748181253567" alt="Management Staff Full Resolution">
+                        </div>
+                    </div>
+                    <div class="role-item flex flex-col items-center text-center p-0 cursor-pointer clickable">
+                        <a href="nefarious-film-criminal.html">
+                            <img src="https://ik.imagekit.io/pmdim6jh9/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202025-05-25%20185328.png?updatedAt=1748181305102" alt="Nefarious film criminal Icon" class="rounded-lg w-24 h-24 object-cover mb-2 border border-gray-300">
+                            <h4 class="font-semibold text-gray-800">Nefarious film criminal</h4>
+                        </a>
+                        <div class="magnified-image-container">
+                            <img src="https://ik.imagekit.io/pmdim6jh9/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202025-05-25%20185328.png?updatedAt=1748181305102" alt="Nefarious film criminal Full Resolution">
+                        </div>
+                    </div>
+                    <div class="role-item flex flex-col items-center text-center p-0 cursor-pointer clickable">
+                        <a href="film-architect.html">
+                            <img src="https://placehold.co/100x100/eeeeee/000000/text=Film+Architect" alt="Film Architect Icon" class="rounded-lg w-24 h-24 object-cover mb-2 border border-gray-300">
+                            <h4 class="font-semibold text-gray-800">Film Architect</h4>
+                        </a>
+                        <div class="magnified-image-container">
+                            <img src="https://placehold.co/150x150/eeeeee/000000/text=Film+Architect+Full" alt="Film Architect Full Resolution">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="special-roles">
+                <h2>Special Roles</h2>
+                <ul class="list-disc pl-5 text-gray-700">
+                    <li><strong>Founder/Director:</strong> The current director- Bob, magcrusher14</li>
+                </ul>
+            </section>
+
+        </article>
+    </main>
+
+    <footer class="bg-gray-100 border-t border-gray-300 py-4 px-4 mt-8 text-sm text-gray-600 text-center">
+        <div class="container mx-auto">
+            <p>&copy; 2025, CUFSpedia. Content is available under CGB and TCU permission, unless otherwise noted.</p>
+            <p class="mt-2">
+                <span class="text-gray-600">there is no privacy, you are always being watched</span> 
+                <a href="index.html" class="text-blue-600 hover:underline">About CUFSpedia</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const expandableToggle = document.querySelector('.expandable-toggle');
+            const subList = document.querySelector('.sub-list');
+
+            if (expandableToggle && subList) {
+                expandableToggle.addEventListener('click', function() {
+                    subList.classList.toggle('hidden'); // Use 'hidden' class from Tailwind CSS
+                    expandableToggle.classList.toggle('expanded'); // Toggle class for arrow rotation
+                    if (subList.style.display === 'block') {
+                        subList.style.display = 'none';
+                    } else {
+                        subList.style.display = 'block';
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
