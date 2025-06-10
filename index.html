@@ -86,7 +86,8 @@
         }
         .sub-list {
             padding-left: 1.5rem; /* Indentation for sub-items */
-            display: none; /* Hidden by default */
+            /* The 'display: none;' rule for hiding/showing is now entirely handled by Tailwind's 'hidden' class,
+               which is toggled by the JavaScript. */
         }
         .sub-list li {
             margin-top: 0.2rem;
@@ -127,7 +128,7 @@
                         <a href="roles.html" class="expandable-toggle text-blue-600 hover:underline">
                             <span class="arrow">></span> Roles
                         </a>
-                        <ul class="sub-list">
+                        <ul class="sub-list hidden">
                             <li><a href="mom-personnel.html" class="text-blue-600 hover:underline">MoM personnel</a></li>
                             <li><a href="stage-crew.html" class="text-blue-600 hover:underline">Stage crew</a></li>
                             <li><a href="studio-staff.html" class="text-blue-600 hover:underline">Studio staff</a></li>
@@ -208,8 +209,8 @@
             if (expandableToggle && subList) {
                 expandableToggle.addEventListener('click', function(event) {
                     event.preventDefault(); // Stop the default link behavior to allow expansion
-                    subList.classList.toggle('hidden'); 
-                    expandableToggle.classList.toggle('expanded'); 
+                    subList.classList.toggle('hidden'); // Toggles Tailwind's hidden class
+                    expandableToggle.classList.toggle('expanded'); // Toggles class for arrow rotation
                 });
             }
         });
