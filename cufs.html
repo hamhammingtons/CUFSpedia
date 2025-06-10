@@ -22,6 +22,16 @@
         a:hover {
             text-decoration: underline;
         }
+        /* Styling for ordered lists within content */
+        ol {
+            list-style-type: decimal;
+            padding-left: 1.5rem; /* Indent the list numbers */
+            margin-bottom: 1rem;
+        }
+        ol li {
+            margin-bottom: 0.5rem;
+            line-height: 1.5;
+        }
     </style>
 </head>
 <body class="flex flex-col min-h-screen">
@@ -43,13 +53,24 @@
 
             <div class="mb-4">
                 <h2 class="text-2xl font-semibold mb-2">Contents</h2>
-                <p class="text-gray-700">This page is about the Computr Union Film Studio.</p>
+                <p class="text-gray-700">This page is about the Computer Union Film Studio, the official film studio of TCU.</p>
             </div>
 
-            <div>
+            <div class="mb-6">
                 <h2 class="text-2xl font-semibold mb-2">About CUFSpedia</h2>
                 <p class="text-gray-700">Created by Ham Hammingtons, or sucssss231231, is a free gifthub used page which you can look for information about CUFS.</p>
             </div>
+
+            <div>
+                <h2 class="text-2xl font-semibold mb-4 text-gray-900">Movies produced for TCU</h2>
+                <ol class="text-gray-700">
+                    <li>**N FOR NOOBLORD:** Started in 2024 but was cancelled after the first act due to a coup inside the TCU (released December 22nd, 2024)</li>
+                    <li>**Airforce anarchy:** A animation based film about the original Union Airforce. (Released January 1st, 2025.)</li>
+                    <li>**Crimes of Noobingrad Episode one:** A documentary about the porzsydo Rail Massacre (Released February 5th, 2025)</li>
+                    <li>**From TCU with love:** Romcom about the dictator and the minister of media. Canceled because it was too freaky. (Trailer premiered April 13th, 2025)</li>
+                </ol>
+            </div>
+            
         </div>
     </main>
 
